@@ -3,8 +3,7 @@ import { Hono } from 'hono'
 const app = new Hono()
 
 const welcomeStrings = [
-  'Hello Hono!',
-  'To learn more about Hono on Vercel, visit vercel'
+  'Hello Hono!'
 ]
 
 app.get('/', (c) => {
