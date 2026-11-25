@@ -4,7 +4,7 @@ const app = new Hono()
 
 const welcomeStrings = [
   'Hello Hono!',
-  'To learn more about Hono on Vercel, visit https://vercel.com/docs/frameworks/backend/hono'
+  'To learn more about Hono on Vercel, visit vercel'
 ]
 
 app.get('/', (c) => {
