@@ -3,7 +3,11 @@ import { Hono } from 'hono'
 const app = new Hono()
 
 app.get('/', (c) => {
-  return c.text('hello vercel')
+  return c.text('hello vercel!')
+})
+
+app.get('/marco', (c) => {
+  return c.text('polo')
 })
 
 export default app
