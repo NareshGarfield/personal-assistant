@@ -1,6 +1,14 @@
 import { Hono } from 'hono'
+import { env } from 'hono/adapter'
 
 const app = new Hono()
+
+type AppEnvironment = {
+  FIRECRAWL_API_KEY?: string
+  SCRAPE_API_TOKEN?: string
+  TELEGRAM_BOT_TOKEN?: string
+  TELEGRAM_WEBHOOK_SECRET?: string
+}
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
@@ -15,8 +23,8 @@ app.get('/marco', (c) => {
 })
 
 app.post('/api/scrape', async (c) => {
-  const firecrawlApiKey = process.env.FIRECRAWL_API_KEY
-  const scrapeApiToken = process.env.SCRAPE_API_TOKEN
+  const { FIRECRAWL_API_KEY: firecrawlApiKey, SCRAPE_API_TOKEN: scrapeApiToken } =
+    env<AppEnvironment>(c)
 
   if (!firecrawlApiKey || !scrapeApiToken) {
     return c.json({ error: 'Firecrawl scraping is not configured' }, 503)
@@ -96,8 +104,8 @@ app.post('/api/scrape', async (c) => {
 })
 
 app.post('/api/telegram/webhook', async (c) => {
-  const botToken = process.env.TELEGRAM_BOT_TOKEN
-  const webhookSecret = process.env.TELEGRAM_WEBHOOK_SECRET
+  const { TELEGRAM_BOT_TOKEN: botToken, TELEGRAM_WEBHOOK_SECRET: webhookSecret } =
+    env<AppEnvironment>(c)
 
   if (!botToken || !webhookSecret) {
     return c.json({ error: 'Telegram webhook is not configured' }, 503)
